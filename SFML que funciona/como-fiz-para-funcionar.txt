@@ -1,0 +1,13 @@
+Download the sfml zip from sfml-dev.org again. Then look in its SFML-2.4.2-osx-clang/Frameworks folder. Copy everything in there to /Library/Frameworks/
+
+de:
+https://stackoverflow.com/questions/33510147/linker-errors-on-os-x-ld-framework-not-found-sfml
+
+Além disso o comando é:
+
+g++ -I./SFML/include  -framework sfml-window -framework sfml-graphics -framework sfml-system sfmlHW.cpp -o objf
+
+para o shader:
+g++ -I./SFML/include  -framework sfml-window -framework sfml-graphics -framework sfml-system Shader.cpp -o shad
+SFML >>./shad
+^^^^Isto é importante! se for duplo click não funciona.

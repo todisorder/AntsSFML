@@ -1,0 +1,1 @@
+g++ -I./SFML/include -std=c++11 -framework sfml-window -framework sfml-graphics -framework sfml-system  AntsSFML01.cpp -o ants
