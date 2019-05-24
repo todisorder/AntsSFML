@@ -167,9 +167,9 @@ public:
             kind = I_want_the_kind_to_be;
         }
         if (kind == 1) {
-            stamina = 50.;
+            stamina = kind1_initial_stamina;
         } else {
-            stamina = 1.;
+            stamina = kind2_initial_stamina;
         }
 
 
@@ -191,7 +191,7 @@ public:
         sensingradius.setRadius(testballRadius - 0);
         sensingradius.setOutlineThickness(0);
         sensingradius.setOutlineColor(sf::Color::Black);
-        sensingradius.setFillColor(sf::Color(200,255,55,50));
+        sensingradius.setFillColor(sf::Color(200,255,55,20));
         sensingradius.setOrigin(testballRadius / 2. , testballRadius / 2.);
         
         float antennaRadius = zoom_multiplier*3.f;
@@ -265,9 +265,9 @@ public:
         OutputState.resize(number_of_outputs);
 //
         if (kind == 1) {
-            stamina = 50.;
+            stamina = kind1_initial_stamina;
         } else {
-            stamina = 1.;
+            stamina = kind2_initial_stamina;
         }
 //        stamina = 1.;
         hitpoints = 100.;
@@ -288,7 +288,7 @@ public:
         float testballRadius = sensingradius.getRadius();
         sensingradius.setOutlineThickness(0);
         sensingradius.setOutlineColor(sf::Color::Black);
-        sensingradius.setFillColor(sf::Color(200,255,55,30));
+        sensingradius.setFillColor(sf::Color(200,255,55,20));
         sensingradius.setOrigin(testballRadius / 2. , testballRadius / 2.);
         
         float antennaRadius = zoom_multiplier*3.f;
@@ -583,7 +583,7 @@ void OneAnt::reproduce(std::vector<OneAnt*>& ants)
         }
     }
     newborn->load();
-    stamina *= 0.3;
+    stamina *= 0.99;
 }
 
 void OneAnt::will_I_die()
@@ -593,7 +593,7 @@ void OneAnt::will_I_die()
 ////        I_am_alive = false;
 //    }
     
-    I_am_alive = (stamina +0.05*Uniform(generator) > .005);
+    I_am_alive = (stamina + 0.05*Uniform(generator) > .01);
     
     
     // AJUSTAR ISTO:
@@ -923,7 +923,7 @@ int main()
                             if (all_the_ants[i]->kind == 1 && all_the_ants[j]->kind == 2) {
                                 std::cout <<"ant "<<i<<" is eating ant "<<j<<"\n";
                                 all_the_ants[i]->stamina += 3.;
-                                all_the_ants[j]->stamina *= 0.5;
+                                all_the_ants[j]->stamina *= 0.2;
                             }
                             if (all_the_ants[i]->kind ==  all_the_ants[j]->kind) {
                                 std::cout <<"ant "<<i<<" and "<<j<<" are hurting\n";

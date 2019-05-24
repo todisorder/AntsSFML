@@ -59,6 +59,9 @@ int number_of_wheights2 = number_of_nodes*number_of_outputs;
 float initial_bias =0.;
 
 
+static float const kind1_initial_stamina = 0.5;
+
+static float const kind2_initial_stamina = 1.;
 
 
 
