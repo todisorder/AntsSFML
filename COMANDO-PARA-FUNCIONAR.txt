@@ -1,1 +1,12 @@
 g++ -I./SFML/include -std=c++11 -framework sfml-window -framework sfml-graphics -framework sfml-system  AntsSFML01.cpp -o ants
+HAHAHAHAHAHAHA ISSO ERA NO YOSEMITE!!!! :D :D :D :D :D
+
+
+
+AGORA NO HIGH SIERRA É:
+
+g++ -std=c++11 AntsSFML01.cpp -lsfml-window -lsfml-graphics  -lsfml-system -o this
+
+Só descobri depois de muito penar, em
+https://stackoverflow.com/questions/50788629/sfml-gcc-and-undefined-symbol-for-sfstring
+Porquê?? Não Sei!

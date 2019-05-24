@@ -1,6 +1,8 @@
 float delta_t = .1f;
 
-static int number_of_ants = 1;
+static int number_of_ants = 4;
+
+static int number_of_kinds = 2;     // only 2
 
 float sensing_area_radius = 20.;
 
@@ -10,11 +12,11 @@ float sensing_area_half_angle = 2.*Pi/13.;
 
 static float const Diffusion = 10.;
 
-static float const Evaporation = 4;
+static float const Evaporation = .04;
 
 static float const Amount = 500.;
 
-static float const drop_every_iter = 5.;
+static float const drop_every_iter = -1.;       // -1 for no pheromone.
 
 static float const droplet_too_old = 10.;
 
@@ -39,15 +41,22 @@ std::vector<std::vector<float>> neighbor_squares = {N,S,W,E,NW,NE,SW,SE};
 
 float zoom_multiplier = 1.;
 
-static int const seed1 = 12;
+static int const seed1 = 3;
 
-static float const tau = .2;
+static float const tau = .1;
 
 static float const threshold = 0.7;
 
 static std::string const BoundaryMethod = "periodic";      // "periodic" or "reflective"
 //static std::string const BoundaryMethod = "reflective";      // "periodic" or "reflective"
 
+
+int number_of_nodes = 10;
+int number_of_inputs = 10;   // Things that will take part in the measurement, eg., doplet level, other ants detected, speed, etc
+int number_of_outputs = 2;
+int number_of_wheights1 = number_of_inputs*number_of_nodes;
+int number_of_wheights2 = number_of_nodes*number_of_outputs;
+float initial_bias =0.;
 
 
 

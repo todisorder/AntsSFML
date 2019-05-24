@@ -1,6 +1,8 @@
 
 //  Randoms
-std::default_random_engine generator(seed1);
+//std::default_random_engine generator(seed1);      // Use same seed
+//std::default_random_engine generator(time(0));    // Use different seed
+std::mt19937 generator(time(0));                    // Other RNG
 std::normal_distribution<float> Normal(0.,1.);          // Normal(0.,1.std::)
 std::normal_distribution<float> SmallNormal(0.,.05);      // (0.,.05)
 std::uniform_real_distribution<float> UniformAngle(0.,2.*Pi);      // Uniformly distributed angle
@@ -88,4 +90,74 @@ void Periodify(float& x, float& y)
         y = y + Sign(y_2 - y)*(y_2 - y_1);
     }
 }
+
+bool rolldice(int aa, int bb)
+{
+//    bool result = false;
+    if (aa>bb) {
+        return true;
+    }
+    if (aa==0) {
+        return false;
+    }
+    std::uniform_int_distribution<int> unif(0,aa*bb-1);
+    int dice = unif(generator);
+    if (dice <= aa*aa) {
+        return true;
+    }
+    return false;
+}
+
+
+float Perturb(float q)
+{
+    if (rolldice(3,10)) {
+        return  q*(1. + .2*Normal(generator));
+    } else {
+        return q;
+    }
+}
+
+float PerturbWithoutSign(float q)
+{
+    if (rolldice(3,10)) {
+        return  q + .06*Normal(generator);
+    } else {
+        return q;
+    }
+}
+
+float negative_exponential(float a, float b, float x)
+{
+//    float a = 1;
+//    float b = 1;
+    return a*exp(-b*x);
+//    return 0.f;
+}
+
+float sigmoid(float x, float bias)
+{
+    float y = x-bias;
+    // sigmoid: [0,1]
+//    return 1.f/(1.f+exp(-y));
+    // positive part:
+    return std::max(threshold,y+threshold);
+//    if (y < 0.) {
+//        return 0.;
+//    } else {
+//        return y;
+//    }
+}
+
+float reallysigmoid(float x)
+{
+    return 1.f/(1.f+exp(-x));
+}
+
+float oneminusexp(float x)
+{
+    return 1.f-exp(-x);
+}
+
+//float VeryComplicatedFunction()
 
