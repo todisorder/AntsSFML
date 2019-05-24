@@ -10,3 +10,9 @@ g++ -std=c++11 AntsSFML01.cpp -lsfml-window -lsfml-graphics  -lsfml-system -o th
 Só descobri depois de muito penar, em
 https://stackoverflow.com/questions/50788629/sfml-gcc-and-undefined-symbol-for-sfstring
 Porquê?? Não Sei!
+
+
+NO LINUX:
+
+g++ -std=c++11   AntsSFML01.cpp -o this  -lsfml-graphics -lsfml-window -lsfml-system && ./this 
+

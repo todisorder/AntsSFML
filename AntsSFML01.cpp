@@ -555,7 +555,7 @@ float OneAnt::Feeling(float time, float x, float y, std::vector<Droplet>& pherom
 
 void OneAnt::reproduce(std::vector<OneAnt*>& ants)
 {
-    std::cout <<"reproduced havig stamina "<<stamina<<"\n";
+    std::cout <<"reproduced having stamina "<<stamina<<"\n";
     ants.push_back(new OneAnt(number_of_inputs,number_of_nodes,number_of_outputs));
     OneAnt* newborn = ants[ants.size()-1];
     
@@ -583,7 +583,7 @@ void OneAnt::reproduce(std::vector<OneAnt*>& ants)
         }
     }
     newborn->load();
-    stamina *= 0.5;
+    stamina *= 0.3;
 }
 
 void OneAnt::will_I_die()
@@ -695,14 +695,16 @@ int main()
     pauseMessage.setFont(font);
     pauseMessage.setCharacterSize(40);
     pauseMessage.setPosition(170.f, 150.f);
-    pauseMessage.setFillColor(sf::Color::White);
+    //pauseMessage.setFillColor(sf::Color::White);		//uncomment on mac (sfml 2.5)
+    pauseMessage.setColor(sf::Color::White);    		//uncomment on linux (sfml 2.1)
     pauseMessage.setString("Press space to start/pause\n d - deposit pheromone\n r - remove pheromone\n s - save screenshot");
     
     sf::Text stats;
     stats.setFont(font);
     stats.setCharacterSize(20);
     pauseMessage.setPosition(170.f, 250.f);
-    stats.setFillColor(sf::Color::White);
+    //stats.setFillColor(sf::Color::White);	//uncomment on mac (sfml 2.5)
+    stats.setColor(sf::Color::White);		//uncomment on linux (sfml 2.1)
     
 
 
@@ -920,7 +922,7 @@ int main()
                         {
                             if (all_the_ants[i]->kind == 1 && all_the_ants[j]->kind == 2) {
                                 std::cout <<"ant "<<i<<" is eating ant "<<j<<"\n";
-                                all_the_ants[i]->stamina *= 3.5;
+                                all_the_ants[i]->stamina += 3.;
                                 all_the_ants[j]->stamina *= 0.5;
                             }
                             if (all_the_ants[i]->kind ==  all_the_ants[j]->kind) {
@@ -986,7 +988,7 @@ int main()
                         all_droplets.erase(all_droplets.begin()+ii);
                         std::cout <<"Just ate drop nr "<< ii <<"\n";
                         Droplet::number_of_droplets--;
-                        all_the_ants[i]->stamina *= 2.5;
+                        all_the_ants[i]->stamina += 1.;
                         all_the_ants[i]->hitpoints *= 1.01;
 //                        float rad = all_the_ants[i]->body.getRadius();
 //                        all_the_ants[i]->body.setRadius(rad*1.01);
