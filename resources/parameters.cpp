@@ -51,7 +51,7 @@ static std::string const BoundaryMethod = "periodic";      // "periodic" or "ref
 //static std::string const BoundaryMethod = "reflective";      // "periodic" or "reflective"
 
 
-int number_of_nodes = 10;
+int number_of_nodes = 20;
 int number_of_inputs = 10;   // Things that will take part in the measurement, eg., doplet level, other ants detected, speed, etc
 int number_of_outputs = 2;
 int number_of_wheights1 = number_of_inputs*number_of_nodes;

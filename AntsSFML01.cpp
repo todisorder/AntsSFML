@@ -377,9 +377,8 @@ public:
         antenna_R_shape.setPosition(antenna_R.x,antenna_R.y);
         
         float distance_covered = sqrt(delta_t * vel_old.x*delta_t * vel_old.x + delta_t * vel_old.y *delta_t * vel_old.y);
-        stamina = (1.-0.004*(1.+distance_covered)*(1.+0.005*body.getRadius()*body.getRadius()))*stamina;
+        stamina *= (1.-0.004*(1.+distance_covered)*(1.+0.00*body.getRadius()*body.getRadius()));
         
-//        InputState = {felt_dropletsL, felt_dropletsR, felt_bodiesL, felt_bodiesR, body.getRadius(), stamina, hitpoints, sensing_angle};
 
         
     }
