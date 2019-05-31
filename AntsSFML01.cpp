@@ -377,7 +377,7 @@ public:
         antenna_R_shape.setPosition(antenna_R.x,antenna_R.y);
         
         float distance_covered = sqrt(delta_t * vel_old.x*delta_t * vel_old.x + delta_t * vel_old.y *delta_t * vel_old.y);
-        stamina *= (1.-0.004*(1.+distance_covered)*(1.+0.00*body.getRadius()*body.getRadius()));
+        stamina *= (1.-0.007*(1.+distance_covered)*(1.+0.00*body.getRadius()*body.getRadius()));
         
 
         
@@ -582,6 +582,8 @@ void OneAnt::reproduce(std::vector<OneAnt*>& ants)
         }
     }
     newborn->load();
+    newborn->vel_old.x *= 10.;
+    newborn->vel_old.y *= 10.;
     stamina *= 0.99;
 }
 
@@ -655,6 +657,10 @@ int main()
 //    float Ly = y_2-y_1;
     const int windowWidth = Lx;
     const int windowHeight = Ly;
+    
+    const int statwindowWidth = 400;
+    const int statwindowHeight = 400;
+    
 //    float ballRadius = 10.f;
 //    int number_of_ants = 35;  // in another file.
     number_of_ants -= 1;
@@ -680,9 +686,17 @@ int main()
 
     
     // Create the window of the application
+     sf::RenderWindow statwindow(sf::VideoMode(statwindowWidth, statwindowHeight, 32), "Stats",
+                            sf::Style::Titlebar | sf::Style::Close);
+    statwindow.setVerticalSyncEnabled(true);
+    statwindow.clear(sf::Color(20, 20, 20));
+    
+    
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight, 32), "Evol",
                             sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
+    
+   
     
     // Load the text font
     sf::Font font;
@@ -701,10 +715,17 @@ int main()
     sf::Text stats;
     stats.setFont(font);
     stats.setCharacterSize(20);
-    pauseMessage.setPosition(170.f, 250.f);
+    //pauseMessage.setPosition(170.f, 250.f);
     //stats.setFillColor(sf::Color::White);	//uncomment on mac (sfml 2.5)
-    stats.setColor(sf::Color::White);		//uncomment on linux (sfml 2.1)
+    stats.setColor(sf::Color(255,255,255,50));		//uncomment on linux (sfml 2.1)
+    stats.setPosition(20.f,20.f);
+    stats.setCharacterSize(20);
     
+    sf::Text antstats;
+    antstats.setFont(font);
+    antstats.setCharacterSize(20);    
+    //antstats.setFillColor(sf::Color::White);	//uncomment on mac (sfml 2.5)
+    antstats.setColor(sf::Color::White);		//uncomment on linux (sfml 2.1)
 
 
     sf::Clock clock;
@@ -741,8 +762,8 @@ int main()
             float dist2 = (dx*dx + dy*dy);
             if (sqrt(dist2) <= all_the_ants[i]->sensingradius.getRadius())
             {
-                stats.setPosition(mouse_x+20,mouse_y-10);
-                stats.setString("Nr "+std::to_string(i)+"\nFDL "+std::to_string(all_the_ants[i]->felt_dropletsL)+"\nFDR "+std::to_string(all_the_ants[i]->felt_dropletsR)+"\nFBLk1 "+std::to_string(all_the_ants[i]->felt_bodiesL_k1)+"\nFBRk1 "+std::to_string(all_the_ants[i]->felt_bodiesR_k1)+"\nFBLk2 "+std::to_string(all_the_ants[i]->felt_bodiesL_k2)+"\nFBRk2 "+std::to_string(all_the_ants[i]->felt_bodiesR_k2)+"\nSTA "+std::to_string(all_the_ants[i]->stamina)+"\nOutL "+std::to_string(all_the_ants[i]->OutputState[0])+"\nOutR "+std::to_string(all_the_ants[i]->OutputState[1])+"\nBIA "+std::to_string(all_the_ants[i]->bias)+"\nHP "+std::to_string(all_the_ants[i]->hitpoints));
+                antstats.setPosition(mouse_x+20,mouse_y-10);
+                antstats.setString("Nr "+std::to_string(i)+"\nFDL "+std::to_string(all_the_ants[i]->felt_dropletsL)+"\nFDR "+std::to_string(all_the_ants[i]->felt_dropletsR)+"\nFBLk1 "+std::to_string(all_the_ants[i]->felt_bodiesL_k1)+"\nFBRk1 "+std::to_string(all_the_ants[i]->felt_bodiesR_k1)+"\nFBLk2 "+std::to_string(all_the_ants[i]->felt_bodiesL_k2)+"\nFBRk2 "+std::to_string(all_the_ants[i]->felt_bodiesR_k2)+"\nSTA "+std::to_string(all_the_ants[i]->stamina)+"\nOutL "+std::to_string(all_the_ants[i]->OutputState[0])+"\nOutR "+std::to_string(all_the_ants[i]->OutputState[1])+"\nBIA "+std::to_string(all_the_ants[i]->bias)+"\nHP "+std::to_string(all_the_ants[i]->hitpoints));
             }
         }
         
@@ -1043,6 +1064,8 @@ int main()
         }
         // Clear the window
         window.clear(sf::Color(20, 20, 20));
+        //statwindow.clear(sf::Color(20, 20, 20));
+
         
         //  Drawing
         
@@ -1063,24 +1086,50 @@ int main()
         
 //        std::cout << "ants = " << all_the_ants.size() <<"\n";
         
-        // Draw the ants
+        exec_time = clock.getElapsedTime() - I_have_been_paused_this_time;
+        double rightnow = !isPaused*exec_time.asSeconds()+isPaused*rightnow;
+        // Draw the stuff
+        int nr_of_kind1 = 0;
+        int nr_of_kind2 = 0;
+        for (std::size_t i = 0; i < all_the_ants.size(); ++i)
+        {
+        	if (all_the_ants[i]->kind == 1){
+        		nr_of_kind1 ++;
+        	}
+        }
+        nr_of_kind2 = all_the_ants.size() - nr_of_kind1;
+        
         for (std::size_t i = 0; i < all_the_ants.size(); ++i)
         {
             window.draw(all_the_ants[i]->sensingradius);
             window.draw(all_the_ants[i]->body);
             window.draw(all_the_ants[i]->antenna_L_shape);
             window.draw(all_the_ants[i]->antenna_R_shape);
+            
         }
+        // Draw phase space
+        sf::CircleShape phase;
+        float rad = 2.;
+        phase.setRadius(rad);
+        phase.setFillColor(sf::Color(255,255,255,10));
+        phase.setOrigin(rad/2.,rad/2.);
+        phase.setPosition(nr_of_kind1,nr_of_kind2);
+        statwindow.draw(phase);
+        
+        // Set stats string
+        stats.setString("kind 1: "+std::to_string(nr_of_kind1)+"\n"+"kind 2: "+std::to_string(nr_of_kind2)+"\n"+"total: "+std::to_string(nr_of_kind1+nr_of_kind2)+"\n"+"time: "+std::to_string(rightnow)+"\n");
+        window.draw(stats);
         if (isPaused)
         {
             window.draw(pauseMessage);
-            window.draw(stats);
+            window.draw(antstats);
             
         }
         
         // Display things on screen
         window.display();
-//        print_this(iteration);
+        statwindow.display();
+
     }
 
     return EXIT_SUCCESS;
