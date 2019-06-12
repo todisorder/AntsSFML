@@ -708,24 +708,24 @@ int main()
     pauseMessage.setFont(font);
     pauseMessage.setCharacterSize(40);
     pauseMessage.setPosition(170.f, 150.f);
-    //pauseMessage.setFillColor(sf::Color::White);		//uncomment on mac (sfml 2.5)
-    pauseMessage.setColor(sf::Color::White);    		//uncomment on linux (sfml 2.1)
+    pauseMessage.setFillColor(sf::Color::White);        //uncomment on mac (sfml 2.5)
+//    pauseMessage.setColor(sf::Color::White);            //uncomment on linux (sfml 2.1)
     pauseMessage.setString("Press space to start/pause\n d - deposit pheromone\n r - remove pheromone\n s - save screenshot");
     
     sf::Text stats;
     stats.setFont(font);
     stats.setCharacterSize(20);
     //pauseMessage.setPosition(170.f, 250.f);
-    //stats.setFillColor(sf::Color::White);	//uncomment on mac (sfml 2.5)
-    stats.setColor(sf::Color(255,255,255,50));		//uncomment on linux (sfml 2.1)
+    stats.setFillColor(sf::Color(255,255,255,50));    //uncomment on mac (sfml 2.5)
+//    stats.setColor(sf::Color(255,255,255,50));        //uncomment on linux (sfml 2.1)
     stats.setPosition(20.f,20.f);
     stats.setCharacterSize(20);
     
     sf::Text antstats;
     antstats.setFont(font);
     antstats.setCharacterSize(20);    
-    //antstats.setFillColor(sf::Color::White);	//uncomment on mac (sfml 2.5)
-    antstats.setColor(sf::Color::White);		//uncomment on linux (sfml 2.1)
+    antstats.setFillColor(sf::Color::White);    //uncomment on mac (sfml 2.5)
+//    antstats.setColor(sf::Color::White);        //uncomment on linux (sfml 2.1)
 
 
     sf::Clock clock;
@@ -1098,15 +1098,8 @@ int main()
         	}
         }
         nr_of_kind2 = all_the_ants.size() - nr_of_kind1;
-        
-        for (std::size_t i = 0; i < all_the_ants.size(); ++i)
-        {
-            window.draw(all_the_ants[i]->sensingradius);
-            window.draw(all_the_ants[i]->body);
-            window.draw(all_the_ants[i]->antenna_L_shape);
-            window.draw(all_the_ants[i]->antenna_R_shape);
-            
-        }
+//        sf::CircleShape nothing;    // If this is not here, on mac its all messed up sometimes...
+//        statwindow.draw(nothing);
         // Draw phase space
         sf::CircleShape phase;
         float rad = 2.;
@@ -1115,6 +1108,15 @@ int main()
         phase.setOrigin(rad/2.,rad/2.);
         phase.setPosition(nr_of_kind1,nr_of_kind2);
         statwindow.draw(phase);
+
+        
+        for (std::size_t i = 0; i < all_the_ants.size(); ++i)
+        {
+            window.draw(all_the_ants[i]->sensingradius);
+            window.draw(all_the_ants[i]->body);
+            window.draw(all_the_ants[i]->antenna_L_shape);
+            window.draw(all_the_ants[i]->antenna_R_shape);
+        }
         
         // Set stats string
         stats.setString("kind 1: "+std::to_string(nr_of_kind1)+"\n"+"kind 2: "+std::to_string(nr_of_kind2)+"\n"+"total: "+std::to_string(nr_of_kind1+nr_of_kind2)+"\n"+"time: "+std::to_string(rightnow)+"\n");
@@ -1127,8 +1129,9 @@ int main()
         }
         
         // Display things on screen
-        window.display();
         statwindow.display();
+        window.display();
+        
 
     }
 

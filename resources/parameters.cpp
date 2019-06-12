@@ -1,6 +1,6 @@
 float delta_t = .1f;
 
-static int number_of_ants = 100;
+static int number_of_ants = 300;
 
 static int number_of_kinds = 2;     // only 2
 
@@ -24,9 +24,9 @@ static float const ignore_droplet_if_this_far = 5.*sensing_area_radius;
 static float const ignore_droplet_if_this_far2 = ignore_droplet_if_this_far*ignore_droplet_if_this_far;
 
 static float const x_1 = 0.;
-static float const x_2 = 1000.;
+static float const x_2 = 1800.;
 static float const y_1 = 0.;
-static float const y_2 = 700.;
+static float const y_2 = 1200.;
 float Lx = x_2-x_1;
 float Ly = y_2-y_1;
 std::vector<float> N = {0., x_2};
