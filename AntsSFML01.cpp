@@ -1098,7 +1098,7 @@ int main()
         	}
         }
         nr_of_kind2 = all_the_ants.size() - nr_of_kind1;
-//        sf::CircleShape nothing;    // If this is not here, on mac its all messed up sometimes...
+//        sf::CircleShape nothing;    // If this is not here, on mac its all messed up sometimes ...
 //        statwindow.draw(nothing);
         // Draw phase space
         sf::CircleShape phase;
